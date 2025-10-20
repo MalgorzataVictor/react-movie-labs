@@ -11,6 +11,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import img from '../../images/logo.png';
+import CardMedia from "@mui/material/CardMedia";
+
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -34,7 +37,12 @@ const SiteHeader = () => {
     <>
       <AppBar position="fixed" sx={{ backgroundColor: "#cc0000" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
-          <Typography variant="h5"> </Typography>
+          <CardMedia
+            component="img"
+            image={img}
+            alt="Logo"
+            sx={{ height: 64, width: 128 }} 
+          />
           <Box
             sx={{
               position: "absolute",
