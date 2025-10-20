@@ -34,7 +34,7 @@ const SiteHeader = () => {
     <>
       <AppBar position="fixed" sx={{ backgroundColor: "#cc0000" }}>
         <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
-          <Typography variant="h5">Web App Dev 2</Typography>
+          <Typography variant="h5"> </Typography>
           <Box
             sx={{
               position: "absolute",
@@ -43,7 +43,7 @@ const SiteHeader = () => {
               textAlign: "center",
             }}
           >
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
               Malgosia Movies
             </Typography>
           </Box>
