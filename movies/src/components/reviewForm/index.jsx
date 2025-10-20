@@ -93,7 +93,7 @@ const ReviewForm = ({ movie }) => {
         review.rating = rating;
         console.log(review);
         context.addReview(movie, review);
-        setOpen(true); // NEW
+        setOpen(true); 
     };
 
 

@@ -1,4 +1,5 @@
-
+import React, { useContext } from "react";
+import { useNavigate, Link } from "react-router";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -9,78 +10,111 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import img from '../../images/film-poster-placeholder.png'
-import { Link } from "react-router";
-import React, { useContext } from "react";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import img from '../../images/film-poster-placeholder.png';
 import { MoviesContext } from "../../contexts/moviesContext";
 
-import Avatar from '@mui/material/Avatar';
-
-
 export default function MovieCard({ movie, action }) {
-
   const { favorites, addToFavorites } = useContext(MoviesContext);
+  const navigate = useNavigate();
 
-  if (favorites.find((id) => id === movie.id)) {
-    movie.favorite = true;
-  } else {
-    movie.favorite = false
-  }
+  movie.favorite = favorites.includes(movie.id);
 
   const handleAddToFavorite = (e) => {
-    e.preventDefault();
     addToFavorites(movie);
   };
 
-
   return (
-    <Card>
+    <Card
+      sx={{
+        maxWidth: 345,
+        margin: "auto",
+        borderRadius: 3,
+        boxShadow: 3,
+        transition: "transform 0.2s",
+        "&:hover": { transform: "scale(1.03)", cursor: "pointer" },
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <CardHeader
         avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
+          movie.favorite && (
+            <IconButton onClick={handleAddToFavorite}>
+              <Avatar sx={{ backgroundColor: "#cc0000" }}>
+                <FavoriteIcon />
+              </Avatar>
+            </IconButton>
+          )
         }
+
         title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", textAlign: "center", whiteSpace: "normal" }}
+          >
+            {movie.title}
           </Typography>
         }
+        sx={{
+          height: 64,
+          padding: 1,
+        }}
       />
 
-      <CardMedia
-        sx={{ height: 500 }}
-        image={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-            : img
-        }
-      />
+      <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+        <CardMedia
+          component="img"
+          image={movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : img}
+          alt={movie.title}
+          sx={{
+            width: "100%",
+            aspectRatio: "1 / 1",
+            objectFit: "cover",
+          }}
+        />
+      </Link>
+
       <CardContent>
-        <Grid container>
-          <Grid size={{ xs: 6 }}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
-              {movie.release_date}
-            </Typography>
+        <Grid container alignItems="center" justifyContent="space-between">
+          <Grid item>
+            <Box display="flex" alignItems="center" gap={0.5}>
+              <CalendarIcon fontSize="small" sx={{ color: "#555" }} />
+              <Typography variant="body2" color="textSecondary">
+                {movie.release_date}
+              </Typography>
+            </Box>
           </Grid>
-          <Grid size={{ xs: 6 }}>
-            <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
-            </Typography>
+          <Grid item>
+            <Box display="flex" alignItems="center" gap={0.5}>
+              <StarRateIcon fontSize="small" sx={{ color: "#fbc02d" }} />
+              <Typography variant="body2" color="textSecondary">
+                {movie.vote_average.toFixed(1)}
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
+
+
+      <CardActions sx={{ justifyContent: "space-between", paddingX: 2, paddingBottom: 2 }}>
         {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
+        <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            size="medium"
+            sx={{
+              backgroundColor: "#cc0000",
+              color: "#fff",
+              "&:hover": { backgroundColor: "#b30000" },
+              borderRadius: 2,
+              textTransform: "none",
+            }}
+          >
+            More Info
           </Button>
         </Link>
       </CardActions>
