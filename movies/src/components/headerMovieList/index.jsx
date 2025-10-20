@@ -12,6 +12,8 @@ import Spinner from '../spinner';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Header = (props) => {
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ const Header = (props) => {
   const handleMenuClose = () => setAnchorEl(null);
 
   const handleGenreSelect = (genreId) => {
-    handleChange({ preventDefault: () => {} }, "genre", genreId);
+    handleChange({ preventDefault: () => { } }, "genre", genreId);
     handleMenuClose();
   };
 
@@ -61,12 +63,16 @@ const Header = (props) => {
         padding: "8px 12px",
       }}
     >
-      {/* Left arrow */}
+
       <IconButton aria-label="go back" onClick={() => navigate(-1)}>
         <ArrowBackIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-      {/* Filter button */}
+      <IconButton aria-label="home" onClick={() => navigate("/")}>
+        <HomeIcon sx={{ color: "#cc0000" }} fontSize="large" />
+      </IconButton>
+
+
       <IconButton
         aria-label="filter"
         onClick={handleFilterClick}
@@ -74,7 +80,7 @@ const Header = (props) => {
         <FilterAltIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-      {/* Search bar */}
+
       <TextField
         id="filled-search"
         label="Search"
@@ -95,17 +101,19 @@ const Header = (props) => {
         }}
       />
 
-      {/* Sort icon */}
       <IconButton aria-label="sort">
         <SwapVertIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-      {/* Right arrow */}
+
+      <IconButton aria-label="favourities" onClick={() => navigate("movies/favorites")}>
+        <FavoriteIcon sx={{ color: "#cc0000" }} fontSize="large" />
+      </IconButton>
+
       <IconButton aria-label="go forward" onClick={() => navigate(+1)}>
         <ArrowForwardIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-      {/* Genre dropdown menu */}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
