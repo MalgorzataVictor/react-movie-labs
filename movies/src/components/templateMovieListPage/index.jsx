@@ -7,13 +7,20 @@ import Typography from "@mui/material/Typography";
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
-  const [sortType, setSortType] = useState("alphabetical");
-  const genreId = Number(genreFilter);
+  const [countryFilter, setCountryFilter] = useState("0");
+  const [sortType, setSortType] = useState("alphabetical-asc");
+
 
   let displayedMovies = movies
     .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
-    .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true));
+    .filter((m) => (genreFilter !== "0" ? m.genre_ids.includes(Number(genreFilter)) : true))
+    .filter((m) =>
+      countryFilter !== "0"
+        ? m.production_countries?.some((c) => c.iso_3166_1 === countryFilter)
+        : true
+    );
 
+ 
   switch (sortType) {
     case "alphabetical-asc":
       displayedMovies.sort((a, b) => a.title.localeCompare(b.title));
@@ -28,13 +35,26 @@ function MovieListPageTemplate({ movies, title, action }) {
       displayedMovies.sort((a, b) => a.vote_average - b.vote_average);
       break;
     default:
-      break; 
+      break;
   }
 
   const handleChange = (type, value) => {
-    if (type === "name") setNameFilter(value);
-    else if (type === "sort") setSortType(value);
-    else setGenreFilter(value);
+    switch (type) {
+      case "name":
+        setNameFilter(value);
+        break;
+      case "genre":
+        setGenreFilter(value);
+        break;
+      case "country":
+        setCountryFilter(value);
+        break;
+      case "sort":
+        setSortType(value);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -45,6 +65,8 @@ function MovieListPageTemplate({ movies, title, action }) {
           onUserInput={handleChange}
           titleFilter={nameFilter}
           genreFilter={genreFilter}
+          countryFilter={countryFilter}
+          movies={movies}
         />
       </Grid>
 
@@ -52,7 +74,7 @@ function MovieListPageTemplate({ movies, title, action }) {
         <Typography
           variant="h4"
           align="center"
-          sx={{ mt: 4, fontWeight: "bold" }}
+          sx={{ mt: 4, mb: 2, fontWeight: "bold" }}
         >
           {title}
         </Typography>
