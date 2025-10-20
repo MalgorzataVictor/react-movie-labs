@@ -3,24 +3,19 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router";
-import { styled } from '@mui/material/styles';
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
   const menuOptions = [
@@ -30,76 +25,64 @@ const SiteHeader = () => {
     { label: "Trending Today", path: "/movies/trending/today" },
   ];
 
-  const handleMenuSelect = (pageURL) => {
-    setAnchorEl(null);
-    navigate(pageURL);
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuSelect = (path) => {
+    setDrawerOpen(false);
+    navigate(path);
   };
 
   return (
     <>
-      <AppBar position="fixed" color="secondary">
-        <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            TMDB Client
-          </Typography>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            All you ever wanted to know about Movies!
-          </Typography>
-            {isMobile ? (
-              <>
-                <IconButton
-                  aria-label="menu"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={open}
-                  onClose={() => setAnchorEl(null)}
-                >
-                  {menuOptions.map((opt) => (
-                    <MenuItem
-                      key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}
-                    >
-                      {opt.label}
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </>
-            ) : (
-              <>
-                {menuOptions.map((opt) => (
-                  <Button
-                    key={opt.label}
-                    color="inherit"
-                    onClick={() => handleMenuSelect(opt.path)}
-                  >
-                    {opt.label}
-                  </Button>
-                ))}
-              </>
-            )}
+      <AppBar position="fixed" sx={{ backgroundColor: "#cc0000" }}>
+        <Toolbar sx={{ justifyContent: "space-between", position: "relative" }}>
+          <Typography variant="h5">Web App Dev 2</Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Malgosia Movies
+            </Typography>
+          </Box>
+          <IconButton color="inherit" edge="end" onClick={() => setDrawerOpen(true)}>
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        <Box
+          sx={{
+            width: 250,
+            paddingTop: 2,
+          }}
+          role="presentation"
+        >
+          <Typography
+            variant="h6"
+            sx={{ textAlign: "center", marginBottom: 2, fontWeight: "bold" }}
+          >
+            Menu
+          </Typography>
+          <List>
+            {menuOptions.map((opt) => (
+              <ListItem
+                button
+                key={opt.label}
+                onClick={() => handleMenuSelect(opt.path)}
+              >
+                <ListItemText primary={opt.label} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
       <Offset />
     </>
   );
