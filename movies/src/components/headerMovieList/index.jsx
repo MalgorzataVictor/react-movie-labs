@@ -1,23 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import { getGenres } from "../../api/tmdb-api";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 import TextField from "@mui/material/TextField";
-import Spinner from '../spinner';
+import Spinner from "../spinner";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
-import HomeIcon from '@mui/icons-material/Home';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import HomeIcon from "@mui/icons-material/Home";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Header = (props) => {
   const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [sortAnchorEl, setSortAnchorEl] = React.useState(null);
 
   const formControl = {
     margin: 1,
@@ -25,7 +27,7 @@ const Header = (props) => {
   };
 
   const { data, error, isPending, isError } = useQuery({
-    queryKey: ['genres'],
+    queryKey: ["genres"],
     queryFn: getGenres,
   });
 
@@ -50,6 +52,14 @@ const Header = (props) => {
     handleMenuClose();
   };
 
+  const handleSortClick = (event) => setSortAnchorEl(event.currentTarget);
+  const handleSortClose = () => setSortAnchorEl(null);
+
+  const handleSortSelect = (type) => {
+    handleSortClose();
+    props.onUserInput("sort", type);
+  };
+
   return (
     <Paper
       component="div"
@@ -63,7 +73,6 @@ const Header = (props) => {
         padding: "8px 12px",
       }}
     >
-
       <IconButton aria-label="go back" onClick={() => navigate(-1)}>
         <ArrowBackIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
@@ -72,14 +81,9 @@ const Header = (props) => {
         <HomeIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-
-      <IconButton
-        aria-label="filter"
-        onClick={handleFilterClick}
-      >
+      <IconButton aria-label="filter" onClick={handleFilterClick}>
         <FilterAltIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
-
 
       <TextField
         id="filled-search"
@@ -101,12 +105,15 @@ const Header = (props) => {
         }}
       />
 
-      <IconButton aria-label="sort">
+
+      <IconButton aria-label="sort" onClick={handleSortClick}>
         <SwapVertIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-
-      <IconButton aria-label="favourities" onClick={() => navigate("movies/favorites")}>
+      <IconButton
+        aria-label="favourites"
+        onClick={() => navigate("movies/favorites")}
+      >
         <FavoriteIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
@@ -114,11 +121,8 @@ const Header = (props) => {
         <ArrowForwardIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
+
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
         {genres.map((genre) => (
           <MenuItem
             key={genre.id}
@@ -128,6 +132,25 @@ const Header = (props) => {
             {genre.name}
           </MenuItem>
         ))}
+      </Menu>
+
+      <Menu
+        anchorEl={sortAnchorEl}
+        open={Boolean(sortAnchorEl)}
+        onClose={handleSortClose}
+      >
+        <MenuItem onClick={() => handleSortSelect("alphabetical-asc")}>
+          Alphabetical (A–Z)
+        </MenuItem>
+        <MenuItem onClick={() => handleSortSelect("alphabetical-desc")}>
+          Alphabetical (Z–A)
+        </MenuItem>
+        <MenuItem onClick={() => handleSortSelect("rating-desc")}>
+          Rating (High → Low)
+        </MenuItem>
+        <MenuItem onClick={() => handleSortSelect("rating-asc")}>
+          Rating (Low → High)
+        </MenuItem>
       </Menu>
     </Paper>
   );

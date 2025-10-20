@@ -7,14 +7,33 @@ import Typography from "@mui/material/Typography";
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+  const [sortType, setSortType] = useState("alphabetical");
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
     .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
     .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true));
 
+  switch (sortType) {
+    case "alphabetical-asc":
+      displayedMovies.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case "alphabetical-desc":
+      displayedMovies.sort((a, b) => b.title.localeCompare(a.title));
+      break;
+    case "rating-desc":
+      displayedMovies.sort((a, b) => b.vote_average - a.vote_average);
+      break;
+    case "rating-asc":
+      displayedMovies.sort((a, b) => a.vote_average - b.vote_average);
+      break;
+    default:
+      break; 
+  }
+
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
+    else if (type === "sort") setSortType(value);
     else setGenreFilter(value);
   };
 
