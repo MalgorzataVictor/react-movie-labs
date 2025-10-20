@@ -13,6 +13,11 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import img from '../../images/logo.png';
 import CardMedia from "@mui/material/CardMedia";
+import CloseIcon from "@mui/icons-material/Close";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+
+
 
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
@@ -41,7 +46,7 @@ const SiteHeader = () => {
             component="img"
             image={img}
             alt="Logo"
-            sx={{ height: 64, width: 128 }} 
+            sx={{ height: 64, width: 128 }}
           />
           <Box
             sx={{
@@ -64,33 +69,81 @@ const SiteHeader = () => {
         anchor="right"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
+        slotProps={{
+          paper: {
+            sx: {
+              width: 280,
+              background: "linear-gradient(180deg, #cc0000 0%, #660000 100%)",
+              color: "white",
+              borderTopLeftRadius: 16,
+              borderBottomLeftRadius: 16,
+              boxShadow: "0 0 25px rgba(0, 0, 0, 0.5)",
+              overflow: "hidden",
+            },
+          },
+        }}
       >
-        <Box
-          sx={{
-            width: 250,
-            paddingTop: 2,
-          }}
-          role="presentation"
-        >
+        <Box sx={{ p: 2, position: "relative" }}>
+          <IconButton
+            onClick={() => setDrawerOpen(false)}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              color: "white",
+              "&:hover": { color: "#ffcccc" },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+
           <Typography
             variant="h6"
-            sx={{ textAlign: "center", marginBottom: 2, fontWeight: "bold" }}
+            sx={{
+              textAlign: "center",
+              mt: 1,
+              mb: 3,
+              fontWeight: "bold",
+              letterSpacing: 1,
+              textTransform: "uppercase",
+            }}
           >
             Menu
           </Typography>
+
           <List>
             {menuOptions.map((opt) => (
-              <ListItem
-                button
-                key={opt.label}
-                onClick={() => handleMenuSelect(opt.path)}
-              >
-                <ListItemText primary={opt.label} />
+              <ListItem key={opt.label} disablePadding>
+                <ListItemButton
+                  onClick={() => handleMenuSelect(opt.path)}
+                  sx={{
+                    borderRadius: 2,
+                    mb: 1,
+                    transition: "0.3s",
+                    "&:hover": {
+                      backgroundColor: "rgba(255,255,255,0.2)",
+                      transform: "translateX(-4px)",
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
+                    {opt.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={opt.label}
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                      fontSize: "1.1rem",
+                    }}
+                  />
+                </ListItemButton>
               </ListItem>
             ))}
           </List>
         </Box>
       </Drawer>
+
+
       <Offset />
     </>
   );
