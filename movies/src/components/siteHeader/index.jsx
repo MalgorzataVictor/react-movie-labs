@@ -16,6 +16,8 @@ import CardMedia from "@mui/material/CardMedia";
 import CloseIcon from "@mui/icons-material/Close";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from '@mui/material/Divider';
+
 
 
 
@@ -113,32 +115,42 @@ const SiteHeader = () => {
           </Typography>
 
           <List>
-            {menuOptions.map((opt) => (
-              <ListItem key={opt.label} disablePadding>
-                <ListItemButton
-                  onClick={() => handleMenuSelect(opt.path)}
-                  sx={{
-                    borderRadius: 2,
-                    mb: 1,
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                      transform: "translateX(-4px)",
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
-                    {opt.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={opt.label}
-                    primaryTypographyProps={{
-                      fontWeight: 500,
-                      fontSize: "1.1rem",
+            {menuOptions.map((opt, index) => (
+              <React.Fragment key={opt.label}>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => handleMenuSelect(opt.path)}
+                    sx={{
+                      borderRadius: 2,
+                      mb: 1,
+                      transition: "0.3s",
+                      "&:hover": {
+                        backgroundColor: "rgba(255,255,255,0.2)",
+                        transform: "translateX(-4px)",
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
+                      {opt.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={opt.label}
+                      primaryTypographyProps={{
+                        fontWeight: 500,
+                        fontSize: "1.1rem",
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                {index === 0 && (
+                  <Divider
+                    sx={{
+                      my: 1,
+                      backgroundColor: "rgba(255,255,255,0.3)",
                     }}
                   />
-                </ListItemButton>
-              </ListItem>
+                )}
+              </React.Fragment>
             ))}
           </List>
         </Box>
