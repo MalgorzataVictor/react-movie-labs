@@ -12,6 +12,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import TrendingMoviePage from "./pages/trendingMoviesPage";
+import PopularMoviePage from "./pages/popularMoviesPage";
 
 
 
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
             <Route path="/movies/upcoming" element={<UpcomingeMoviesPage />} />
             <Route path="/movies/trending/today" element={<TrendingMoviePage/>} />
+            <Route path="/movies/popular" element={<PopularMoviePage/>} />
             <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/" element={<HomePage />} />
