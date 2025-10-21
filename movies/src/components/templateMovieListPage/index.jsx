@@ -7,18 +7,15 @@ import Typography from "@mui/material/Typography";
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
-  const [countryFilter, setCountryFilter] = useState("0");
+  const [languageFilter, setLanguageFilter] = useState("0");
   const [sortType, setSortType] = useState("alphabetical-asc");
 
 
   let displayedMovies = movies
     .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
     .filter((m) => (genreFilter !== "0" ? m.genre_ids.includes(Number(genreFilter)) : true))
-    .filter((m) =>
-      countryFilter !== "0"
-        ? m.production_countries?.some((c) => c.iso_3166_1 === countryFilter)
-        : true
-    );
+    .filter((m) => (languageFilter !== "0" ? languageFilter === 'all' || m.original_language.includes(languageFilter) : true))
+    
 
  
   switch (sortType) {
@@ -46,8 +43,9 @@ function MovieListPageTemplate({ movies, title, action }) {
       case "genre":
         setGenreFilter(value);
         break;
-      case "country":
-        setCountryFilter(value);
+      case "language":
+        console.log(value)
+        setLanguageFilter(value);
         break;
       case "sort":
         setSortType(value);
@@ -65,7 +63,7 @@ function MovieListPageTemplate({ movies, title, action }) {
           onUserInput={handleChange}
           titleFilter={nameFilter}
           genreFilter={genreFilter}
-          countryFilter={countryFilter}
+          languageFilter={languageFilter}
           movies={movies}
         />
       </Grid>

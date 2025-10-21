@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getGenres } from "../../api/tmdb-api";
+import { getGenres, getLanguages } from "../../api/tmdb-api";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -15,12 +15,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router";
 import Spinner from "../spinner";
 
-const Header = ({ movies = [], titleFilter, genreFilter, countryFilter, onUserInput }) => {
+const Header = ({ movies = [], titleFilter, genreFilter, languageFilter, onUserInput }) => {
   const navigate = useNavigate();
 
   const [filterAnchorEl, setFilterAnchorEl] = useState(null);
   const [genreMenuAnchor, setGenreMenuAnchor] = useState(null);
-  const [countryMenuAnchor, setCountryMenuAnchor] = useState(null);
+  const [languageMenuAnchor, setLanguageMenuAnchor] = useState(null);
   const [sortAnchorEl, setSortAnchorEl] = useState(null);
   const [filterType, setFilterType] = useState("genre");
 
@@ -29,27 +29,30 @@ const Header = ({ movies = [], titleFilter, genreFilter, countryFilter, onUserIn
     queryFn: getGenres,
   });
 
+  const { data: dataL, error: errorL, isPending: isPendingL, isError: isErrorL } = useQuery({
+    queryKey: ["languages"],
+    queryFn: getLanguages,
+  });
+
   if (isPending) return <Spinner />;
   if (isError) return <h1>{error.message}</h1>;
 
   const genres = data.genres;
   if (genres[0].name !== "All") genres.unshift({ id: "0", name: "All" });
 
-  const countries = Array.from(
-    new Set(
-      movies
-        .flatMap(({ production_countries }) => production_countries || [])
-        .map((c) => c.iso_3166_1) 
-        .filter((c) => c != null)
-    )
-  ).map((code) => {
-   
-    const country = movies
-      .flatMap(({ production_countries }) => production_countries || [])
-      .find((c) => c.iso_3166_1 === code);
-    return { code, name: country?.name || code };
-  });
+  if (isPendingL) return <Spinner />;
+  if (isErrorL) return <h1>{errorL.message}</h1>;
 
+  const all = { iso_639_1: "", english_name: "All", name: "" };
+
+  const languages = [...(dataL || [])]; 
+  languages.sort((a, b) =>
+    a.english_name === "All" ? -1 : a.english_name.localeCompare(b.english_name)
+  );
+
+  if (!languages.some(l => l.english_name === "All")) {
+    languages.unshift(all);
+  }
   const handleTextChange = (e) => onUserInput("name", e.target.value);
 
   const handleFilterClick = (e) => setFilterAnchorEl(e.currentTarget);
@@ -60,9 +63,9 @@ const Header = ({ movies = [], titleFilter, genreFilter, countryFilter, onUserIn
     setGenreMenuAnchor(null);
   };
 
-  const handleCountrySelect = (code) => {
-    onUserInput("country", code);
-    setCountryMenuAnchor(null);
+  const handleLanguageSelect = (code) => {
+    onUserInput("language", code);
+    setLanguageMenuAnchor(null);
   };
 
   const handleSortClick = (e) => setSortAnchorEl(e.currentTarget);
@@ -108,14 +111,14 @@ const Header = ({ movies = [], titleFilter, genreFilter, countryFilter, onUserIn
           By Genre
         </MenuItem>
         <MenuItem
-          selected={filterType === "country"}
+          selected={filterType === "language"}
           onClick={() => {
-            setFilterType("country");
-            setCountryMenuAnchor(filterAnchorEl); 
+            setFilterType("language");
+            setLanguageMenuAnchor(filterAnchorEl);
             handleFilterClose();
           }}
         >
-          By Production Country
+          By Language
         </MenuItem>
 
       </Menu>
@@ -128,14 +131,14 @@ const Header = ({ movies = [], titleFilter, genreFilter, countryFilter, onUserIn
         ))}
       </Menu>
 
-      <Menu anchorEl={countryMenuAnchor} open={Boolean(countryMenuAnchor)} onClose={() => setCountryMenuAnchor(null)}>
-        {countries.map((c) => (
+      <Menu anchorEl={languageMenuAnchor} open={Boolean(languageMenuAnchor)} onClose={() => setLanguageMenuAnchor(null)}>
+        {languages.map((c) => (
           <MenuItem
-            key={c.code}
-            selected={countryFilter === c.code}
-            onClick={() => handleCountrySelect(c.code)}
+            key={c.iso_639_1}
+            selected={languageFilter === c.iso_639_1}
+            onClick={() => handleLanguageSelect(c.iso_639_1)}
           >
-            {c.name}
+            {c.english_name}
           </MenuItem>
         ))}
       </Menu>
