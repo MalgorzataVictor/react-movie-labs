@@ -27,6 +27,15 @@ export default function MovieCard({ movie, action }) {
     addToFavorites(movie);
   };
 
+  const newDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-GB", {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  };
+
   return (
     <Card
       sx={{
@@ -84,7 +93,7 @@ export default function MovieCard({ movie, action }) {
             <Box display="flex" alignItems="center" gap={0.5}>
               <CalendarIcon fontSize="small" sx={{ color: "#555" }} />
               <Typography variant="body2" color="textSecondary">
-                {movie.release_date}
+                {newDate(movie.release_date)}
               </Typography>
             </Box>
           </Grid>
