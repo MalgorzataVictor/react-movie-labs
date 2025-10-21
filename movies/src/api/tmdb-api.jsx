@@ -70,9 +70,11 @@ export const getUpcomingMovie = () => {
     });
 };
 
-export const getPopularMovie = () => {
+export const getPopularMovie = (page = 1) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    `https://api.themoviedb.org/3/movie/popular?api_key=${
+      import.meta.env.VITE_TMDB_KEY
+    }&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
