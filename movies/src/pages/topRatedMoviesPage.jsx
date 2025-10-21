@@ -1,34 +1,46 @@
-	import React, { useContext } from "react";
-	import { getTopRatedMovie } from "../api/tmdb-api";
-	import PageTemplate from '../components/templateMovieListPage';
-	import { useQuery } from '@tanstack/react-query';
-	import Spinner from '../components/spinner';
-	
-	const TopRatedMoviePage = (props) => {
-	
-	  const { data, error, isPending, isError } = useQuery({
-	    queryKey: ['topRated'],
-	    queryFn: getTopRatedMovie,
-	  })
-	
-	  if (isPending) {
-	    return <Spinner />
-	  }
-	
-	  if (isError) {
-	    return <h1>{error.message}</h1>
-	  }
-	
-	  const movies = data.results;
-	  
+import React, { useState } from "react";
+import { getTopRatedMovie } from "../api/tmdb-api";
+import PageTemplate from '../components/templateMovieListPage';
+import { useQuery } from '@tanstack/react-query';
+import Spinner from '../components/spinner';
+import { Box } from "@mui/material";
+import Pagination from "../components/pagination";
+
+const TopRatedMoviePage = (props) => {
+	const [page, setPage] = useState(1);
+
+	const { data, error, isPending, isError } = useQuery({
+		queryKey: ['topRated', page],
+		queryFn: () => getTopRatedMovie(page),
+		keepPreviousData: true,
+	})
+
+	if (isPending) {
+		return <Spinner />
+	}
+
+	if (isError) {
+		return <h1>{error.message}</h1>
+	}
+
+	const movies = data.results;
+
 	return (
-	    <PageTemplate
-	      title="Top Rated Movies"
-	      movies={movies}
-	      action={(movie) => {
-	      }}
-	    />
-	  );
-	
-	};
-	export default TopRatedMoviePage;
+		<Box sx={{ p: 2 }}>
+			<PageTemplate
+				title="Top Rated Movies"
+				movies={movies}
+				action={(movie) => {
+				}}
+			/>
+			<Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+				<Pagination
+					page={page}
+					onChange={(e, value) => setPage(value)}
+				/>
+			</Box>
+		</Box>
+	);
+
+};
+export default TopRatedMoviePage;
