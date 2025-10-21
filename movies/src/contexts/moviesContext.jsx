@@ -22,7 +22,7 @@ const MoviesContextProvider = (props) => {
     const addReview = (movie, review) => {
         setMyReviews({ ...myReviews, [movie.id]: review })
     };
-    console.log(myReviews);
+
 
     const removeFromFavorites = (movie) => {
         setFavorites(favorites.filter(

@@ -3,6 +3,7 @@ import Header from "../headerMovieList";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
@@ -15,9 +16,9 @@ function MovieListPageTemplate({ movies, title, action }) {
     .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
     .filter((m) => (genreFilter !== "0" ? m.genre_ids.includes(Number(genreFilter)) : true))
     .filter((m) => (languageFilter !== "0" ? languageFilter === 'all' || m.original_language.includes(languageFilter) : true))
-    
 
- 
+
+
   switch (sortType) {
     case "alphabetical-asc":
       displayedMovies.sort((a, b) => a.title.localeCompare(b.title));
@@ -56,9 +57,10 @@ function MovieListPageTemplate({ movies, title, action }) {
   };
 
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item xs={12} sx={{ width: "100%" }}>
+    <Grid container direction="column" alignItems="center" sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" }}>
         <Header
+          sx={{ width: "100%" }}
           title={title}
           onUserInput={handleChange}
           titleFilter={nameFilter}
@@ -66,21 +68,17 @@ function MovieListPageTemplate({ movies, title, action }) {
           languageFilter={languageFilter}
           movies={movies}
         />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Typography
-          variant="h4"
-          align="center"
-          sx={{ mt: 4, mb: 2, fontWeight: "bold" }}
-        >
-          {title}
-        </Typography>
-      </Grid>
-
-      <Grid item xs={12} sx={{ width: "100%" }}>
+      </Box>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ mt: 4, mb: 2, fontWeight: "bold", width: "100%" }}
+      >
+        {title}
+      </Typography>
+      <Box sx={{ width: "100%" }}>
         <MovieList action={action} movies={displayedMovies} />
-      </Grid>
+      </Box>
     </Grid>
   );
 }

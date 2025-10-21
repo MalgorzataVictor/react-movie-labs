@@ -89,22 +89,18 @@ export default function MovieCard({ movie, action }) {
 
       <CardContent>
         <Grid container alignItems="center" justifyContent="space-between">
-          <Grid item>
-            <Box display="flex" alignItems="center" gap={0.5}>
-              <CalendarIcon fontSize="small" sx={{ color: "#555" }} />
-              <Typography variant="body2" color="textSecondary">
-                {newDate(movie.release_date)}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box display="flex" alignItems="center" gap={0.5}>
-              <StarRateIcon fontSize="small" sx={{ color: "#fbc02d" }} />
-              <Typography variant="body2" color="textSecondary">
-                {movie.vote_average.toFixed(1)}
-              </Typography>
-            </Box>
-          </Grid>
+          <Box display="flex" alignItems="center" gap={0.5}>
+            <CalendarIcon fontSize="small" sx={{ color: "#555" }} />
+            <Typography variant="body2" color="textSecondary">
+              {newDate(movie.release_date)}
+            </Typography>
+          </Box>
+          <Box display="flex" alignItems="center" gap={0.5}>
+            <StarRateIcon fontSize="small" sx={{ color: "#fbc02d" }} />
+            <Typography variant="body2" color="textSecondary">
+              {movie.vote_average.toFixed(1)}
+            </Typography>
+          </Box>
         </Grid>
       </CardContent>
 

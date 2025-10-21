@@ -14,7 +14,7 @@ const Pagination = ({ page, onChange }) => {
                     fontSize: "1.5rem",
                 },
                 "& .Mui-selected": {
-                    backgroundColor: "#cc0000ff",
+                    backgroundColor: "#cc0000ea",
                     color: "white",
                     fontWeight: "bold",
                 },
