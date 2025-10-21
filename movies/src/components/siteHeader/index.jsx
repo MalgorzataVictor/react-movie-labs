@@ -31,6 +31,7 @@ const SiteHeader = () => {
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Favorites", path: "/movies/favorites" },
+    { label: "Watchlist", path: "/movies/watchlist" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Trending Today", path: "/movies/trending/today" },
     { label: "Popular", path: "/movies/popular" },
@@ -144,7 +145,7 @@ const SiteHeader = () => {
                     />
                   </ListItemButton>
                 </ListItem>
-                {index === 0 && (
+                 {(index === 0 || index === 2) && (
                   <Divider
                     sx={{
                       my: 1,
