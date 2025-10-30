@@ -11,189 +11,238 @@ import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import LanguageIcon from "@mui/icons-material/Language";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 
 
-const MovieDetails = ({ movie, recommendations }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+const MovieDetails = ({ movie, recommendations, credits }) => {
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const cardStyle = {
-    background: "#f5f5f5",
-    borderRadius: "10px",
-    padding: "24px",
-    marginBottom: "20px",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-  };
+    const cardStyle = {
+        background: "#f5f5f5",
+        borderRadius: "10px",
+        padding: "24px",
+        marginBottom: "20px",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+    };
 
-  const chipContainerStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "8px",
-    marginTop: "8px",
-  };
+    const chipContainerStyle = {
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "8px",
+        marginTop: "8px",
+    };
 
-  const detailsSection = {
-    display: "grid",
-    gridTemplateColumns: "150px 1fr",
-    alignItems: "center",
-    marginBottom: "16px",
-  };
+    const detailsSection = {
+        display: "grid",
+        gridTemplateColumns: "150px 1fr",
+        alignItems: "center",
+        marginBottom: "16px",
+    };
 
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-    gap: "16px",
-    marginTop: "10px",
-  };
+    const gridStyle = {
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+        gap: "16px",
+        marginTop: "10px",
+    };
 
-  return (
-    <>
-      <div style={cardStyle}>
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          sx={{ fontWeight: 600 }}
-        >
-          Overview
-        </Typography>
-        <Typography
-          variant="body1"
-          align="center"
-          sx={{ maxWidth: "800px", margin: "0 auto" }}
-        >
-          {movie.overview}
-        </Typography>
-      </div>
-      <div style={cardStyle}>
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          sx={{ fontWeight: 600 }}
-        >
-          Details
-        </Typography>
-
-        {movie.genres.length > 0 && (
-          <div style={detailsSection}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-              Genres:
-            </Typography>
-            <div style={chipContainerStyle}>
-              {movie.genres.map((g) => (
-                <Chip key={g.name} label={g.name} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {movie.production_countries &&
-          movie.production_countries.length > 0 && (
-            <div style={detailsSection}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                Production Countries:
-              </Typography>
-              <div style={chipContainerStyle}>
-                {movie.production_countries.map((c) => (
-                  <Chip key={c.name} label={c.name} />
-                ))}
-              </div>
-            </div>
-          )}
-        <div style={detailsSection}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-            Stats:
-          </Typography>
-          <div style={chipContainerStyle}>
-            <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-            <Chip
-              icon={<MonetizationIcon />}
-              label={`${movie.revenue.toLocaleString()}`}
-            />
-            <Chip
-              icon={<StarRate />}
-              label={`${movie.vote_average} (${movie.vote_count})`}
-            />
-            <Chip icon={<LanguageIcon />} label={movie.original_language} />
-            <Chip
-              icon={<EventIcon />} 
-              label={`Released: ${movie.release_date}`}
-            />
-          </div>
-        </div>
-      </div>
-      {recommendations && recommendations.length > 0 && (
+    return (
         <>
-          <Typography
-            variant="h4"
-            component="h3"
-            align="center"
-            sx={{ mt: 4, mb: 2, fontWeight: 600 }}
-          >
-            Recommended Movies
-          </Typography>
-          <div style={gridStyle}>
-            {recommendations.slice(0, 8).map((recMovie) => (
-              <Link
-                key={recMovie.id}
-                to={`/movies/${recMovie.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <div
-                  style={{
-                    background: "#f5f5f5",
-                    borderRadius: "10px",
-                    padding: "8px",
-                    textAlign: "center",
-                    transition: "transform 0.2s",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
+            <div style={cardStyle}>
+                <Typography
+                    variant="h4"
+                    align="center"
+                    gutterBottom
+                    sx={{ fontWeight: 600 }}
                 >
-                  <img
-                    src={
-                      recMovie.poster_path
-                        ? `https://image.tmdb.org/t/p/w200${recMovie.poster_path}`
-                        : "/no-image.png"
-                    }
-                    alt={recMovie.title}
-                    style={{
-                      borderRadius: "8px",
-                      width: "100%",
-                      marginBottom: "8px",
-                    }}
-                  />
-                  <Typography variant="subtitle1" noWrap>
-                    {recMovie.title}
-                  </Typography>
+                    Overview
+                </Typography>
+                <Typography
+                    variant="body1"
+                    align="center"
+                    sx={{ maxWidth: "800px", margin: "0 auto" }}
+                >
+                    {movie.overview}
+                </Typography>
+            </div>
+            <div style={cardStyle}>
+                <Typography
+                    variant="h4"
+                    align="center"
+                    gutterBottom
+                    sx={{ fontWeight: 600 }}
+                >
+                    Details
+                </Typography>
+
+                {movie.genres.length > 0 && (
+                    <div style={detailsSection}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            Genres:
+                        </Typography>
+                        <div style={chipContainerStyle}>
+                            {movie.genres.map((g) => (
+                                <Chip key={g.name} label={g.name} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {movie.production_countries &&
+                    movie.production_countries.length > 0 && (
+                        <div style={detailsSection}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                                Production Countries:
+                            </Typography>
+                            <div style={chipContainerStyle}>
+                                {movie.production_countries.map((c) => (
+                                    <Chip key={c.name} label={c.name} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                <div style={detailsSection}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                        Stats:
+                    </Typography>
+                    <div style={chipContainerStyle}>
+                        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
+                        <Chip
+                            icon={<MonetizationIcon />}
+                            label={`${movie.revenue.toLocaleString()}`}
+                        />
+                        <Chip
+                            icon={<StarRate />}
+                            label={`${movie.vote_average} (${movie.vote_count})`}
+                        />
+                        <Chip icon={<LanguageIcon />} label={movie.original_language} />
+                        <Chip
+                            icon={<EventIcon />}
+                            label={`Released: ${movie.release_date}`}
+                        />
+                    </div>
                 </div>
-              </Link>
-            ))}
-          </div>
+            </div>
+
+            {credits && credits.cast && credits.cast.length > 0 && (
+                <div style={cardStyle}>
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: 600 }}
+                    >
+                        Credits
+                    </Typography>
+                    <div style={gridStyle}>
+                        {credits.cast.slice(0, 8).map((member) => (
+                            <div
+                                key={member.id}
+                                style={{
+                                    background: "#f5f5f5",
+                                    borderRadius: "10px",
+                                    padding: "8px",
+                                    textAlign: "center",
+                                    transition: "transform 0.2s",
+                                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                }}
+                            >
+                                <img
+                                    src={
+                                        member.profile_path
+                                            ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
+                                            : "/no-image.png"
+                                    }
+                                    alt={member.name}
+                                    style={{
+                                        borderRadius: "8px",
+                                        width: "100%",
+                                        marginBottom: "8px",
+                                    }}
+                                />
+                                <Typography variant="subtitle2" noWrap>
+                                    {member.name}
+                                </Typography>
+                                <Typography variant="caption" noWrap sx={{ color: "#666" }}>
+                                    {member.character || member.job}
+                                </Typography>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {recommendations && recommendations.length > 0 && (
+                <div style={cardStyle}>
+                    <Typography
+                        variant="h4"
+                        component="h3"
+                        align="center"
+                        sx={{fontWeight: 600 }}
+                    >
+                        Recommended Movies
+                    </Typography>
+                    <div style={gridStyle}>
+                        {recommendations.slice(0, 8).map((recMovie) => (
+                            <Link
+                                key={recMovie.id}
+                                to={`/movies/${recMovie.id}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                <div
+                                    style={{
+                                        background: "#f5f5f5",
+                                        borderRadius: "10px",
+                                        padding: "8px",
+                                        textAlign: "center",
+                                        transition: "transform 0.2s",
+                                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                    }}
+                                >
+                                    <img
+                                        src={
+                                            recMovie.poster_path
+                                                ? `https://image.tmdb.org/t/p/w200${recMovie.poster_path}`
+                                                : "/no-image.png"
+                                        }
+                                        alt={recMovie.title}
+                                        style={{
+                                            borderRadius: "8px",
+                                            width: "100%",
+                                            marginBottom: "8px",
+                                        }}
+                                    />
+                                    <Typography variant="subtitle1" noWrap>
+                                        {recMovie.title}
+                                    </Typography>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
+            <Fab
+                color="secondary"
+                variant="extended"
+                onClick={() => setDrawerOpen(true)}
+                sx={{
+                    position: "fixed",
+                    bottom: "1em",
+                    right: "1em",
+                }}
+            >
+                <NavigationIcon />
+                Reviews
+            </Fab>
+            <Drawer
+                anchor="top"
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+            >
+                <MovieReviews movie={movie} />
+            </Drawer>
         </>
-      )}
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        sx={{
-          position: "fixed",
-          bottom: "1em",
-          right: "1em",
-        }}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
-      <Drawer
-        anchor="top"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
-        <MovieReviews movie={movie} />
-      </Drawer>
-    </>
-  );
+    );
 };
 
 export default MovieDetails;

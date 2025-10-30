@@ -52,7 +52,7 @@ const MovieHeader = (props) => {
             sx={{
               color: "#666",
               fontStyle: "italic",
-              fontWeight: 400,
+              fontWeight: 500,
               marginTop: "4px",
               display: "inline-flex",
               alignItems: "center",
