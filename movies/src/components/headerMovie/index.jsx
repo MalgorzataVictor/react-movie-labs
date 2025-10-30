@@ -7,7 +7,8 @@ import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router";
 
-const MovieHeader = ({ movie }) => {
+const MovieHeader = (props) => {
+  const movie = props.movie;
   const navigate = useNavigate();
 
   return (
@@ -30,29 +31,19 @@ const MovieHeader = ({ movie }) => {
         <ArrowBackIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-    
+
       <div style={{ textAlign: "center", flex: 1 }}>
         <Typography
           variant="h2"
           component="h3"
           sx={{
-        
+
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "0.5px",
           }}
         >
           {movie.title}
-          {movie.homepage && (
-            <a
-              href={movie.homepage}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ marginLeft: "8px", color: "#cc0000" }}
-            >
-              <HomeIcon />
-            </a>
-          )}
         </Typography>
 
         {movie.tagline && (
@@ -63,9 +54,21 @@ const MovieHeader = ({ movie }) => {
               fontStyle: "italic",
               fontWeight: 400,
               marginTop: "4px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
             }}
           >
             “{movie.tagline}”
+            <a href={movie.homepage}>
+              <HomeIcon
+                sx={{
+                  color: "#cc0000",
+                  fontSize: "1.2rem",
+                  verticalAlign: "text-bottom",
+                  marginLeft: "4px",           
+                }} />
+            </a>
           </Typography>
         )}
       </div>
