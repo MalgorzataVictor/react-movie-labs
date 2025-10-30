@@ -4,98 +4,137 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import EventIcon from "@mui/icons-material/Event";
 import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import LanguageIcon from "@mui/icons-material/Language";
-import { Link } from "react-router";
+import { Link } from "react-router"; 
 
-const root = {
-  display: "flex",
-  justifyContent: "center",
-  flexWrap: "wrap",
-  listStyle: "none",
-  padding: 1.5,
-  margin: 0,
-};
-const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie, recommendations }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const cardStyle = {
+    background: "#f5f5f5",
+    borderRadius: "10px",
+    padding: "24px",
+    marginBottom: "20px",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+  };
+
+  const chipContainerStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "8px",
+    marginTop: "8px",
+  };
+
+  const detailsSection = {
+    display: "grid",
+    gridTemplateColumns: "150px 1fr",
+    alignItems: "center",
+    marginBottom: "16px",
+  };
+
+  const gridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+    gap: "16px",
+    marginTop: "10px",
+  };
+
   return (
     <>
-      <Typography variant="h5" component="h3">
-        Overview
-      </Typography>
+      <div style={cardStyle}>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{ fontWeight: 600 }}
+        >
+          Overview
+        </Typography>
+        <Typography
+          variant="body1"
+          align="center"
+          sx={{ maxWidth: "800px", margin: "0 auto" }}
+        >
+          {movie.overview}
+        </Typography>
+      </div>
+      <div style={cardStyle}>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{ fontWeight: 600 }}
+        >
+          Details
+        </Typography>
 
-      <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
+        {movie.genres.length > 0 && (
+          <div style={detailsSection}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+              Genres:
+            </Typography>
+            <div style={chipContainerStyle}>
+              {movie.genres.map((g) => (
+                <Chip key={g.name} label={g.name} />
+              ))}
+            </div>
+          </div>
+        )}
 
-      <Paper component="ul" sx={{ ...root }}>
-        <li>
-          <Chip label="Genres" sx={{ ...chip }} color="primary" />
-        </li>
-        {movie.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} sx={{ ...chip }} />
-          </li>
-        ))}
-      </Paper>
-
-      <Paper component="ul" sx={{ ...root }}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
-        <Chip
-          icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count})`}
-        />
-        <Chip
-          icon={<LanguageIcon />}
-          label={`Original Language: ${movie.original_language}`}
-        />
-        <Chip label={`Released: ${movie.release_date}`} />
-      </Paper>
-
-      {movie.production_countries && movie.production_countries.length > 0 && (
-        <Paper component="ul" sx={{ ...root }}>
-          <li>
+        {movie.production_countries &&
+          movie.production_countries.length > 0 && (
+            <div style={detailsSection}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Production Countries:
+              </Typography>
+              <div style={chipContainerStyle}>
+                {movie.production_countries.map((c) => (
+                  <Chip key={c.name} label={c.name} />
+                ))}
+              </div>
+            </div>
+          )}
+        <div style={detailsSection}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+            Stats:
+          </Typography>
+          <div style={chipContainerStyle}>
+            <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
             <Chip
-              label="Production Countries"
-              sx={{ ...chip }}
-              color="primary"
+              icon={<MonetizationIcon />}
+              label={`${movie.revenue.toLocaleString()}`}
             />
-          </li>
-          {movie.production_countries.map((c) => (
-            <li key={c.name}>
-              <Chip label={c.name} sx={{ ...chip }} />
-            </li>
-          ))}
-        </Paper>
-      )}
-
+            <Chip
+              icon={<StarRate />}
+              label={`${movie.vote_average} (${movie.vote_count})`}
+            />
+            <Chip icon={<LanguageIcon />} label={movie.original_language} />
+            <Chip
+              icon={<EventIcon />} 
+              label={`Released: ${movie.release_date}`}
+            />
+          </div>
+        </div>
+      </div>
       {recommendations && recommendations.length > 0 && (
         <>
-          <Typography variant="h5" component="h3" sx={{ mt: 4 }}>
+          <Typography
+            variant="h4"
+            component="h3"
+            align="center"
+            sx={{ mt: 4, mb: 2, fontWeight: 600 }}
+          >
             Recommended Movies
           </Typography>
-
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-              gap: "16px",
-              marginTop: "10px",
-            }}
-          >
-             {recommendations.slice(0, 8).map((recMovie) => (
+          <div style={gridStyle}>
+            {recommendations.slice(0, 8).map((recMovie) => (
               <Link
                 key={recMovie.id}
                 to={`/movies/${recMovie.id}`}
@@ -103,11 +142,12 @@ const MovieDetails = ({ movie, recommendations }) => {
               >
                 <div
                   style={{
-                    textAlign: "center",
                     background: "#f5f5f5",
                     borderRadius: "10px",
                     padding: "8px",
+                    textAlign: "center",
                     transition: "transform 0.2s",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
                   }}
                 >
                   <img
@@ -132,7 +172,6 @@ const MovieDetails = ({ movie, recommendations }) => {
           </div>
         </>
       )}
-
       <Fab
         color="secondary"
         variant="extended"
@@ -146,7 +185,6 @@ const MovieDetails = ({ movie, recommendations }) => {
         <NavigationIcon />
         Reviews
       </Fab>
-
       <Drawer
         anchor="top"
         open={drawerOpen}
