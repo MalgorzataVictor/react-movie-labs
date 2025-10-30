@@ -10,7 +10,7 @@ const GenericCarousel = ({ items, renderItem, settings = {} }) => {
     infinite: true,
     autoplay: true,
     autoplaySpeed: 0,
-    speed: 10000, 
+    speed: 20000, 
     cssEase: "linear",
     arrows: false,
     swipe: false,

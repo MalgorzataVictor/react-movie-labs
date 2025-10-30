@@ -1,21 +1,18 @@
 import React from "react";
 import GenericCarousel from "./GenericCarousel";
-import AddToFavoritesIcon from "../cardIcons/addToFavorites";
+import Movie from "../movieCard"; 
 
-const MoviesCarousel = ({ movies }) => {
+const MoviesCarousel = ({ movies, action }) => {
   return (
     <GenericCarousel
       items={movies}
       renderItem={(movie) => (
         <div>
-          <img
-            src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-            alt={movie.title}
-            style={{ width: "100%", borderRadius: "8px" }}
+          <Movie
+            movie={movie}
+            action={action} 
+            sx={{ width: "200px" }}
           />
-          <div style={{ marginTop: 8 }}>
-            <AddToFavoritesIcon movie={movie} />
-          </div>
         </div>
       )}
     />
