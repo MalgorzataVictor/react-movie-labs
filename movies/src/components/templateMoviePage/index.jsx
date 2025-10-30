@@ -6,6 +6,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from '../spinner'
+import Paper from "@mui/material/Paper";
 
 
 const TemplateMoviePage = ({ movie, children }) => {
@@ -37,6 +38,17 @@ const TemplateMoviePage = ({ movie, children }) => {
             flexWrap: "wrap",
             justifyContent: "space-around",
           }}>
+             <Paper
+            elevation={4}
+           sx={{
+              padding: "32px",
+              borderRadius: "16px",
+              backgroundColor: "#fafafa",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+              height: "100%",
+              overflowY: "auto"
+            }}
+          >
             <ImageList
               sx={{
                 height: "100vh",
@@ -52,11 +64,22 @@ const TemplateMoviePage = ({ movie, children }) => {
                 </ImageListItem>
               ))}
             </ImageList>
+            </Paper>
           </div>
         </Grid>
 
         <Grid size={{ xs: 9 }}>
-          {children}
+           <Paper
+            elevation={4}
+            sx={{
+              padding: "24px",
+              borderRadius: "16px",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+            }}
+          >
+            {children}
+          </Paper>
         </Grid>
       </Grid>
     </>
