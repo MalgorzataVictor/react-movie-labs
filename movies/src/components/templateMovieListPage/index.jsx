@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import Header from "../headerMovieList";
-import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import MovieList from "../movieList"; // default grid layout
+import GenericCarousel from "../carousels/GenericCarousel";
+import Movie from "../movieCard";
 
-function MovieListPageTemplate({ movies, title, action }) {
+function MovieListPageTemplate({ movies, title, action, useCarousel = false }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [languageFilter, setLanguageFilter] = useState("0");
   const [sortType, setSortType] = useState("alphabetical-asc");
 
-
   let displayedMovies = movies
     .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
     .filter((m) => (genreFilter !== "0" ? m.genre_ids.includes(Number(genreFilter)) : true))
-    .filter((m) => (languageFilter !== "0" ? languageFilter === 'all' || m.original_language.includes(languageFilter) : true))
-
-
+    .filter((m) =>
+      languageFilter !== "0" ? languageFilter === "all" || m.original_language.includes(languageFilter) : true
+    );
 
   switch (sortType) {
     case "alphabetical-asc":
@@ -45,7 +46,6 @@ function MovieListPageTemplate({ movies, title, action }) {
         setGenreFilter(value);
         break;
       case "language":
-        console.log(value)
         setLanguageFilter(value);
         break;
       case "sort":
@@ -69,6 +69,7 @@ function MovieListPageTemplate({ movies, title, action }) {
           movies={movies}
         />
       </Box>
+
       <Typography
         variant="h4"
         align="center"
@@ -76,8 +77,16 @@ function MovieListPageTemplate({ movies, title, action }) {
       >
         {title}
       </Typography>
+
       <Box sx={{ width: "100%" }}>
-        <MovieList action={action} movies={displayedMovies} />
+        {useCarousel ? (
+          <GenericCarousel
+            items={displayedMovies}
+            renderItem={(movie) => <Movie movie={movie} action={action} />}
+          />
+        ) : (
+          <MovieList movies={displayedMovies} action={action} />
+        )}
       </Box>
     </Grid>
   );

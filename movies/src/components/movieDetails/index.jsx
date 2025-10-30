@@ -74,7 +74,7 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                         variant="h4"
                         align="center"
                         gutterBottom
-                        sx={{ fontWeight: 600 }}
+                        sx={{ fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis"  }}
                     >
                         Credits
                     </Typography>

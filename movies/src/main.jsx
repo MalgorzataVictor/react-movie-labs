@@ -16,7 +16,8 @@ import PopularMoviePage from "./pages/popularMoviesPage";
 import TopRatedMoviePage from "./pages/topRatedMoviesPage";
 import NowPlayingMoviePage from "./pages/nowPlayingMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 
