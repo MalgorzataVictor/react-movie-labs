@@ -14,7 +14,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { Link } from "react-router";
 
 
-const MovieDetails = ({ movie, recommendations, credits }) => {
+const MovieDetails = ({ movie, recommendations, credits, videos }) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const cardStyle = {
@@ -226,6 +226,49 @@ const MovieDetails = ({ movie, recommendations, credits }) => {
                     </div>
                 </div>
             )}
+
+            {videos && videos.results && videos.results.length > 0 && (
+                <div style={cardStyle}>
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: 600 }}
+                    >
+                        Videos
+                    </Typography>
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                        gap: "16px",
+                        marginTop: "10px"
+                    }}>
+                        {videos.results.slice(0, 4).map((video) => (
+                            video.site === "YouTube" && (
+                                <div key={video.id} style={{
+                                    borderRadius: "10px",
+                                    overflow: "hidden",
+                                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
+                                }}>
+                                    <iframe
+                                        width="100%"
+                                        height="200"
+                                        src={`https://www.youtube.com/embed/${video.key}`}
+                                        title={video.name}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                    <Typography variant="subtitle1" align="center" sx={{ p: 1 }}>
+                                        {video.name}
+                                    </Typography>
+                                </div>
+                            )
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <Fab
                 color="primary"
                 variant="extended"
