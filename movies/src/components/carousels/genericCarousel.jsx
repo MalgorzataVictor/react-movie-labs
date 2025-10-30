@@ -16,6 +16,7 @@ const GenericCarousel = ({ items, renderItem, settings = {} }) => {
     swipe: false,
     pauseOnHover: true,
     draggable: false,
+    centerPadding: "24px",
     responsive: [
       { breakpoint: 1200, settings: { slidesToShow: 4 } },
       { breakpoint: 900, settings: { slidesToShow: 3 } },

@@ -8,6 +8,8 @@ import Header from "../components/headerMovieList";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import VideosCarousel from "../components/carousels/videosCarousel";
+
 
 const HomePage = () => {
   const { data, isPending, isError, error } = useQuery({
@@ -47,7 +49,7 @@ const HomePage = () => {
         <Typography
           variant="h5"
           align="center"
-          sx={{pt:2, fontWeight: "bold" }}
+          sx={{ pt: 2, fontWeight: "bold" }}
         >
           Discover Movies
         </Typography>
@@ -57,7 +59,32 @@ const HomePage = () => {
           action={(movie) => <AddToFavoritesIcon movie={movie} />}
         />
       </Paper>
+
+         <Paper
+        elevation={3}
+        sx={{
+          ml: 4,
+          mt: 8,
+          mr: 4,
+          pb: 4,
+          borderRadius: 3,
+          backgroundColor: "#f9f9f9",
+        }}
+      >
+        <Typography
+          variant="h5"
+          align="center"
+          sx={{ pt: 2, pb:2, fontWeight: "bold" }}
+        >
+          Movie Trailers
+        </Typography>
+
+        <VideosCarousel movies={movies} />
+      </Paper>
+
     </Box>
+
+    
   );
 };
 
