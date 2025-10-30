@@ -65,6 +65,58 @@ const MovieDetails = ({ movie, recommendations, credits }) => {
                     {movie.overview}
                 </Typography>
             </div>
+
+            {credits && credits.cast && credits.cast.length > 0 && (
+                <div style={cardStyle}>
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: 600 }}
+                    >
+                        Credits
+                    </Typography>
+                    <div style={gridStyle}>
+                        {credits.cast.slice(0, 8).map((member) => (
+                            <div
+                                key={member.id}
+                                style={{
+                                    background: "#f5f5f5",
+                                    borderRadius: "10px",
+                                    padding: "8px",
+                                    textAlign: "center",
+                                    transition: "transform 0.2s",
+                                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                }}
+                            >
+                                <img
+                                    src={
+                                        member.profile_path
+                                            ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
+                                            : "/no-image.png"
+                                    }
+                                    alt={member.name}
+                                    style={{
+                                        borderRadius: "8px",
+                                        width: "100%",
+                                        marginBottom: "8px",
+                                    }}
+                                />
+                                <Typography variant="subtitle2" noWrap>
+                                    {member.name}
+                                </Typography>
+                                <Typography variant="caption" noWrap sx={{ color: "#666" }}>
+                                    {member.character || member.job}
+                                </Typography>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+
+
+
             <div style={cardStyle}>
                 <Typography
                     variant="h4"
@@ -124,53 +176,6 @@ const MovieDetails = ({ movie, recommendations, credits }) => {
                 </div>
             </div>
 
-            {credits && credits.cast && credits.cast.length > 0 && (
-                <div style={cardStyle}>
-                    <Typography
-                        variant="h4"
-                        align="center"
-                        gutterBottom
-                        sx={{ fontWeight: 600 }}
-                    >
-                        Credits
-                    </Typography>
-                    <div style={gridStyle}>
-                        {credits.cast.slice(0, 8).map((member) => (
-                            <div
-                                key={member.id}
-                                style={{
-                                    background: "#f5f5f5",
-                                    borderRadius: "10px",
-                                    padding: "8px",
-                                    textAlign: "center",
-                                    transition: "transform 0.2s",
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                                }}
-                            >
-                                <img
-                                    src={
-                                        member.profile_path
-                                            ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
-                                            : "/no-image.png"
-                                    }
-                                    alt={member.name}
-                                    style={{
-                                        borderRadius: "8px",
-                                        width: "100%",
-                                        marginBottom: "8px",
-                                    }}
-                                />
-                                <Typography variant="subtitle2" noWrap>
-                                    {member.name}
-                                </Typography>
-                                <Typography variant="caption" noWrap sx={{ color: "#666" }}>
-                                    {member.character || member.job}
-                                </Typography>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
 
             {recommendations && recommendations.length > 0 && (
                 <div style={cardStyle}>
@@ -178,7 +183,7 @@ const MovieDetails = ({ movie, recommendations, credits }) => {
                         variant="h4"
                         component="h3"
                         align="center"
-                        sx={{fontWeight: 600 }}
+                        sx={{ fontWeight: 600 }}
                     >
                         Recommended Movies
                     </Typography>
@@ -222,7 +227,7 @@ const MovieDetails = ({ movie, recommendations, credits }) => {
                 </div>
             )}
             <Fab
-                color="secondary"
+                color="primary"
                 variant="extended"
                 onClick={() => setDrawerOpen(true)}
                 sx={{
