@@ -7,36 +7,71 @@ import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router";
 
-const MovieHeader = (props) => {
-  const movie = props.movie;
+const MovieHeader = ({ movie }) => {
   const navigate = useNavigate();
 
   return (
-    <Paper 
-        component="div" 
-        sx={{
-            display: "flex",
-            justifyContent: "space-around",
-            flexWrap: "wrap",
-            padding: 1.5,
-            margin: 0,
-        }}
-      >
-      <IconButton aria-label="go back" onClick={() => navigate(-1)} >
-        <ArrowBackIcon color="primary" fontSize="large" />
+    <Paper
+      component="div"
+      elevation={3}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        padding: "16px 24px",
+        marginBottom: 2,
+        borderRadius: "12px",
+        background: "linear-gradient(135deg, #fafafa, #f5f5f5)",
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <IconButton aria-label="go back" onClick={() => navigate(-1)}>
+        <ArrowBackIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
 
-      <Typography variant="h4" component="h3">
-        {movie.title}
-        <a href={movie.homepage}>
-          <HomeIcon color="primary" />
-        </a>
-        <br />
-        <span sx={{ fontSize: "1.5rem" }}>{`   "${movie.tagline}"`} </span>
-      </Typography>
+    
+      <div style={{ textAlign: "center", flex: 1 }}>
+        <Typography
+          variant="h2"
+          component="h3"
+          sx={{
+        
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.5px",
+          }}
+        >
+          {movie.title}
+          {movie.homepage && (
+            <a
+              href={movie.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginLeft: "8px", color: "#cc0000" }}
+            >
+              <HomeIcon />
+            </a>
+          )}
+        </Typography>
 
-      <IconButton aria-label="go forward" onClick={() => navigate(+1) } >
-        <ArrowForwardIcon color="primary" fontSize="large" />
+        {movie.tagline && (
+          <Typography
+            variant="subtitle1"
+            sx={{
+              color: "#666",
+              fontStyle: "italic",
+              fontWeight: 400,
+              marginTop: "4px",
+            }}
+          >
+            “{movie.tagline}”
+          </Typography>
+        )}
+      </div>
+
+      <IconButton aria-label="go forward" onClick={() => navigate(+1)}>
+        <ArrowForwardIcon sx={{ color: "#cc0000" }} fontSize="large" />
       </IconButton>
     </Paper>
   );
