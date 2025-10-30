@@ -12,6 +12,8 @@ import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Link } from "react-router";
+import InfoIcon from "@mui/icons-material/Info";
+import LinkIcon from "@mui/icons-material/Link"
 
 
 const MovieDetails = ({ movie, recommendations, credits, videos }) => {
@@ -127,6 +129,15 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                     Details
                 </Typography>
 
+                {movie.tagline && (
+                    <div style={detailsSection}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            Tagline:
+                        </Typography>
+                        <Typography>{movie.tagline}</Typography>
+                    </div>
+                )}
+
                 {movie.genres.length > 0 && (
                     <div style={detailsSection}>
                         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
@@ -140,42 +151,70 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                     </div>
                 )}
 
-                {movie.production_countries &&
-                    movie.production_countries.length > 0 && (
-                        <div style={detailsSection}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                                Production Countries:
-                            </Typography>
-                            <div style={chipContainerStyle}>
-                                {movie.production_countries.map((c) => (
-                                    <Chip key={c.name} label={c.name} />
-                                ))}
-                            </div>
+                {movie.production_countries?.length > 0 && (
+                    <div style={detailsSection}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            Production Countries:
+                        </Typography>
+                        <div style={chipContainerStyle}>
+                            {movie.production_countries.map((c) => (
+                                <Chip key={c.name} label={c.name} />
+                            ))}
                         </div>
-                    )}
+                    </div>
+                )}
+
+                {movie.production_companies?.length > 0 && (
+                    <div style={detailsSection}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            Production Companies:
+                        </Typography>
+                        <div style={chipContainerStyle}>
+                            {movie.production_companies.map((pc) => (
+                                <Chip key={pc.id} label={pc.name} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {movie.spoken_languages?.length > 0 && (
+                    <div style={detailsSection}>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            Languages:
+                        </Typography>
+                        <div style={chipContainerStyle}>
+                            {movie.spoken_languages.map((lang) => (
+                                <Chip key={lang.iso_639_1} label={lang.english_name} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 <div style={detailsSection}>
                     <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                         Stats:
                     </Typography>
                     <div style={chipContainerStyle}>
                         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-                        <Chip
-                            icon={<MonetizationIcon />}
-                            label={`${movie.revenue.toLocaleString()}`}
-                        />
-                        <Chip
-                            icon={<StarRate />}
-                            label={`${movie.vote_average} (${movie.vote_count})`}
-                        />
+                        <Chip icon={<MonetizationIcon />} label={`Budget: $${movie.budget?.toLocaleString() || 0}`} />
+                        <Chip icon={<MonetizationIcon />} label={`Revenue: $${movie.revenue?.toLocaleString() || 0}`} />
+                        <Chip icon={<StarRate />} label={`${movie.vote_average} (${movie.vote_count})`} />
                         <Chip icon={<LanguageIcon />} label={movie.original_language} />
-                        <Chip
-                            icon={<EventIcon />}
-                            label={`Released: ${movie.release_date}`}
-                        />
+                        <Chip icon={<EventIcon />} label={`Released: ${movie.release_date}`} />
+                        <Chip icon={<InfoIcon />} label={`Status: ${movie.status}`} />
+                        {movie.homepage && (
+                            <Chip
+                                icon={<LinkIcon />}
+                                label="Official Site"
+                                component="a"
+                                href={movie.homepage}
+                                target="_blank"
+                                clickable
+                            />
+                        )}
                     </div>
                 </div>
             </div>
-
 
             {recommendations && recommendations.length > 0 && (
                 <div style={cardStyle}>
