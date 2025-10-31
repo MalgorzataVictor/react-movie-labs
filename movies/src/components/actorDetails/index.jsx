@@ -1,9 +1,9 @@
 import Typography from "@mui/material/Typography";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 
 const ActorDetails = ({ actor, actCredits }) => {
 
-    const navigate = useNavigate();
+
 
 
     const cardStyle = {

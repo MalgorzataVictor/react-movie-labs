@@ -91,6 +91,7 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                                     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
                                 }}
                             >
+                              <Link to={`/actors/${member.id}`} style={{ textDecoration: "none" }}>  
                                 <img
                                     src={
                                         member.profile_path
@@ -110,6 +111,7 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                                 <Typography variant="caption" noWrap sx={{ color: "#666" }}>
                                     {member.character || member.job}
                                 </Typography>
+                                </Link>
                             </div>
                         ))}
                     </div>
