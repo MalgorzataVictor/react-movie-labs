@@ -16,6 +16,7 @@ import PopularMoviePage from "./pages/popularMoviesPage";
 import TopRatedMoviePage from "./pages/topRatedMoviesPage";
 import NowPlayingMoviePage from "./pages/nowPlayingMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
+import PopularActors from "./pages/popularActors";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -47,6 +48,7 @@ const App = () => {
             <Route path="/movies/popular" element={<PopularMoviePage/>} />
             <Route path="/movies/topRated" element={<TopRatedMoviePage/>} />
             <Route path="/movies/nowPlaying" element={<NowPlayingMoviePage/>} />
+            <Route path="/actors/popular" element={<PopularActors/>} />
             <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/" element={<HomePage />} />
