@@ -1,5 +1,4 @@
 import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
@@ -14,6 +13,8 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { Link } from "react-router";
 import InfoIcon from "@mui/icons-material/Info";
 import LinkIcon from "@mui/icons-material/Link"
+import img from '../../images/actor-image-placeholder.png';
+import img2 from '../../images/film-poster-placeholder.png';
 
 
 const MovieDetails = ({ movie, recommendations, credits, videos }) => {
@@ -96,7 +97,7 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                                     src={
                                         member.profile_path
                                             ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
-                                            : "/no-image.png"
+                                            : img
                                     }
                                     alt={member.name}
                                     style={{
@@ -249,7 +250,7 @@ const MovieDetails = ({ movie, recommendations, credits, videos }) => {
                                         src={
                                             recMovie.poster_path
                                                 ? `https://image.tmdb.org/t/p/w200${recMovie.poster_path}`
-                                                : "/no-image.png"
+                                                : img2
                                         }
                                         alt={recMovie.title}
                                         style={{

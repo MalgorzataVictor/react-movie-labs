@@ -1,8 +1,6 @@
-import React from "react";
 import Movie from "../movieCard/";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Footer from "../footer";
 
 const MovieList = (props) => {
   return (

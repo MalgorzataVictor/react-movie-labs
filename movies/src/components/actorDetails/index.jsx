@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router";
+import img from '../../images/film-poster-placeholder.png';
 
 const ActorDetails = ({ actor, actCredits }) => {
 
@@ -115,7 +116,7 @@ const ActorDetails = ({ actor, actCredits }) => {
                                             src={
                                                 movie.poster_path
                                                     ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                                                    : "/no-image.png"
+                                                    : img
                                             }
                                             alt={movie.title}
                                             style={{

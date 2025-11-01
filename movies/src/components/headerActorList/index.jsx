@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getGenres, getLanguages } from "../../api/tmdb-api";
+import React from "react";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
 import HomeIcon from "@mui/icons-material/Home";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router";
-import Spinner from "../spinner";
 
 const Header = ({ actors = [], nameFilter, onUserInput }) => {
   const navigate = useNavigate();
