@@ -5,6 +5,7 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie, getMovieRecommendations, getMovieCredits, getMovieVideos } from "../api/tmdb-api";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
+import { Helmet } from "react-helmet-async";
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -15,22 +16,22 @@ const MoviePage = () => {
   });
 
   const {
-    data: recommendations, error: recError, isPending: recPending, isError: recIsError} = useQuery({
-    queryKey: ["movieRecommendations", { id }],
-    queryFn: getMovieRecommendations,
-  });
+    data: recommendations, error: recError, isPending: recPending, isError: recIsError } = useQuery({
+      queryKey: ["movieRecommendations", { id }],
+      queryFn: getMovieRecommendations,
+    });
 
-   const {
-    data: credits, error: creError, isPending: crePending, isError: creIsError} = useQuery({
-    queryKey: ["movieCredits", { id }],
-    queryFn: getMovieCredits,
-  });
+  const {
+    data: credits, error: creError, isPending: crePending, isError: creIsError } = useQuery({
+      queryKey: ["movieCredits", { id }],
+      queryFn: getMovieCredits,
+    });
 
-   const {
-    data: videos, error: vidError, isPending: vidPending, isError: vidIsError} = useQuery({
-    queryKey: ["movieVideos", { id }],
-    queryFn: getMovieVideos,
-  });
+  const {
+    data: videos, error: vidError, isPending: vidPending, isError: vidIsError } = useQuery({
+      queryKey: ["movieVideos", { id }],
+      queryFn: getMovieVideos,
+    });
 
   if (isPending || recPending || crePending || vidPending) return <Spinner />;
   if (isError) return <h1>{error.message}</h1>;
@@ -40,6 +41,9 @@ const MoviePage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{movie ? ` ${movie.title}` : "Movie Details"}</title>
+      </Helmet>
       {movie ? (
         <PageTemplate movie={movie}>
           <MovieDetails

@@ -5,6 +5,8 @@ import Spinner from '../components/spinner';
 import { Box } from "@mui/material";
 import Pagination from "../components/pagination";
 import { getPopularActor } from "../api/tmdb-api";
+import { Helmet } from "react-helmet-async";
+
 
 
 
@@ -28,22 +30,25 @@ const PopularActors = (props) => {
   const actors = data.results;
 
   return (
-
-    <Box sx={{ p: 2 }}>
-      <PageTemplate
-        title="Popular Actors"
-        actors={actors}
-      />
-
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-        <Pagination
-          page={page}
-          onChange={(e, value) => setPage(value)}
+    <>
+      <Helmet>
+        <title>{"Popular Actors"}</title>
+      </Helmet>
+      <Box sx={{ p: 2 }}>
+        <PageTemplate
+          title="Popular Actors"
+          actors={actors}
         />
+
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+          <Pagination
+            page={page}
+            onChange={(e, value) => setPage(value)}
+          />
+        </Box>
+
       </Box>
-
-    </Box>
-
+    </>
   );
 };
 export default PopularActors;

@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import { Box } from "@mui/material";
 import Pagination from "../components/pagination";
+import { Helmet } from "react-helmet-async";
+
 
 const NowPlayingMoviePage = (props) => {
 	const [page, setPage] = useState(1);
@@ -26,20 +28,25 @@ const NowPlayingMoviePage = (props) => {
 	const movies = data.results;
 
 	return (
-		<Box sx={{ p: 2 }}>
-			<PageTemplate
-				title="Now Playing Movies"
-				movies={movies}
-				action={(movie) => {
-				}}
-			/>
-			<Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-				<Pagination
-					page={page}
-					onChange={(e, value) => setPage(value)}
+		<>
+			<Helmet>
+				<title>{ "Now Playing"}</title>
+			</Helmet>
+			<Box sx={{ p: 2 }}>
+				<PageTemplate
+					title="Now Playing Movies"
+					movies={movies}
+					action={(movie) => {
+					}}
 				/>
+				<Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+					<Pagination
+						page={page}
+						onChange={(e, value) => setPage(value)}
+					/>
+				</Box>
 			</Box>
-		</Box>
+		</>
 	);
 
 };

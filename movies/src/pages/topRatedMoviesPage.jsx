@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import { Box } from "@mui/material";
 import Pagination from "../components/pagination";
+import { Helmet } from "react-helmet-async";
+
 
 const TopRatedMoviePage = (props) => {
 	const [page, setPage] = useState(1);
@@ -26,6 +28,10 @@ const TopRatedMoviePage = (props) => {
 	const movies = data.results;
 
 	return (
+		<>
+		<Helmet>
+				<title>{ "Top Rated"}</title>
+			</Helmet>
 		<Box sx={{ p: 2 }}>
 			<PageTemplate
 				title="Top Rated Movies"
@@ -40,6 +46,7 @@ const TopRatedMoviePage = (props) => {
 				/>
 			</Box>
 		</Box>
+		</>
 	);
 
 };

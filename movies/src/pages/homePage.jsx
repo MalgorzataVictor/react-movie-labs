@@ -15,6 +15,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { Link } from "react-router";
 import img from "../images/actor-image-placeholder.png";
 import Footer from "../components/footer";
+import { Helmet } from "react-helmet-async";
 
 
 const HomePage = () => {
@@ -39,9 +40,12 @@ const HomePage = () => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 
   return (
+    
     <Box sx={{ width: "100%", backgroundColor: "#f0f0f0", minHeight: "100vh" }}>
       <Header />
-
+       <Helmet>
+        <title>Malgosia Movies</title>
+      </Helmet>
       <Paper
         elevation={3}
         sx={{

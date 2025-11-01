@@ -5,6 +5,7 @@ import { getActor, getActorCredits } from "../api/tmdb-api";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
 import ActorDetails from "../components/actorDetails";
+import { Helmet } from "react-helmet-async";
 
 const ActorPage = () => {
     const { id } = useParams();
@@ -26,6 +27,9 @@ const ActorPage = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{actor ? actor.name : "Actor Page"}</title>
+            </Helmet>
             {actor ? (
                 <PageTemplate actor={actor}>
                     <ActorDetails

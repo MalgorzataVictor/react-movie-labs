@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import Pagination from "../components/pagination";
 import { Box } from "@mui/material";
+import { Helmet } from "react-helmet-async";
+
 
 const TrendingMoviePage = (props) => {
   const [page, setPage] = useState(1);
@@ -27,6 +29,10 @@ const TrendingMoviePage = (props) => {
   const movies = data.results;
 
   return (
+    <>
+    <Helmet>
+				<title>{ "Trending Today"}</title>
+			</Helmet>
     <Box sx={{ p: 2 }}>
       <PageTemplate
         title="Trending Movies"
@@ -42,6 +48,7 @@ const TrendingMoviePage = (props) => {
       </Box>
 
     </Box>
+    </>
   );
 };
 export default TrendingMoviePage;

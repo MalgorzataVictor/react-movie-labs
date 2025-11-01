@@ -6,10 +6,11 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
+import { Helmet } from "react-helmet-async";
 
 
 const FavoriteMoviesPage = () => {
-  const {favorites: movieIds } = useContext(MoviesContext);
+  const { favorites: movieIds } = useContext(MoviesContext);
 
   const favoriteMovieQueries = useQueries({
     queries: movieIds.map((movieId) => {
@@ -19,8 +20,8 @@ const FavoriteMoviesPage = () => {
       }
     })
   });
-  
-  
+
+
   const isPending = favoriteMovieQueries.find((m) => m.isPending === true);
 
   if (isPending) {
@@ -34,21 +35,25 @@ const FavoriteMoviesPage = () => {
 
   const toDo = () => true;
 
-    return (
-    <PageTemplate
-      title="Favorite Movies"
-      movies={movies}
-      action={(movie) => {
-        return (
-          <>
-            <RemoveFromFavorites movie={movie} />
-            <WriteReview movie={movie} />
-          </>
-        );
-      }}
-      
-    />
-    
+  return (
+    <>
+      <Helmet>
+        <title>My Favorite Movies</title>
+      </Helmet>
+      <PageTemplate
+        title="Favorite Movies"
+        movies={movies}
+        action={(movie) => {
+          return (
+            <>
+              <RemoveFromFavorites movie={movie} />
+              <WriteReview movie={movie} />
+            </>
+          );
+        }}
+
+      />
+    </>
   );
 
 };
