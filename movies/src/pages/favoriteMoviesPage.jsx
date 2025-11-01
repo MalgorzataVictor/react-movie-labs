@@ -46,7 +46,9 @@ const FavoriteMoviesPage = () => {
           </>
         );
       }}
+      
     />
+    
   );
 
 };

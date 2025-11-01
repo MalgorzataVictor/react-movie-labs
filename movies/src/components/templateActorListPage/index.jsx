@@ -16,7 +16,7 @@ function ActorListPageTemplate({ actors, title, action }) {
   };
 
   return (
-    <Grid container direction="column" alignItems="center" sx={{ width: "100%" }}>
+    <Grid container direction="column" alignItems="center" sx={{ width: "100%", backgroundColor: "#f0f0f0" }}>
       <Box sx={{ width: "100%" }}>
         <Header
           sx={{ width: "100%" }}

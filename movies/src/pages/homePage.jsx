@@ -14,6 +14,8 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { Link } from "react-router";
 import img from "../images/actor-image-placeholder.png";
+import Footer from "../components/footer";
+
 
 const HomePage = () => {
   const { data, isPending, isError, error } = useQuery({
@@ -37,7 +39,7 @@ const HomePage = () => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", backgroundColor: "#f0f0f0", minHeight: "100vh" }}>
       <Header title="Home Page" movies={movies} />
 
       <Typography
@@ -183,6 +185,8 @@ const HomePage = () => {
 
         <VideosCarousel movies={movies} />
       </Paper>
+
+        <Footer />
 
     </Box>
 

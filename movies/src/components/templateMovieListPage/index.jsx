@@ -4,6 +4,8 @@ import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Footer from "../footer";
+
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
@@ -57,7 +59,7 @@ function MovieListPageTemplate({ movies, title, action }) {
   };
 
   return (
-    <Grid container direction="column" alignItems="center" sx={{ width: "100%" }}>
+    <Grid container direction="column" alignItems="center" sx={{ width: "100%", backgroundColor: "#f0f0f0" }}>
       <Box sx={{ width: "100%" }}>
         <Header
           sx={{ width: "100%" }}
@@ -79,8 +81,11 @@ function MovieListPageTemplate({ movies, title, action }) {
       <Box sx={{ width: "100%" }}>
         <MovieList action={action} movies={displayedMovies} />
       </Box>
+      
     </Grid>
+
   );
+
 }
 
 export default MovieListPageTemplate;
