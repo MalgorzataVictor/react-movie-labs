@@ -5,7 +5,7 @@ import { useQueries } from "@tanstack/react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import { Helmet } from "react-helmet-async";
-
+import RemoveFromWatchlist from "../components/cardIcons/removeFromWatchlist";
 
 const WatchlistMoviesPage = () => {
   const { watchlist: movieId} = useContext(MoviesContext);
@@ -32,7 +32,7 @@ const WatchlistMoviesPage = () => {
     return q.data
   });
 
-  console.log(movies)
+ 
 
   return (
     <>
@@ -45,7 +45,7 @@ const WatchlistMoviesPage = () => {
         action={(movie) => {
           return (
             <>
-              {/* <RemoveFromFavorites movie={movie} /> */}
+              <RemoveFromWatchlist movie={movie} />
               
             </>
           );
