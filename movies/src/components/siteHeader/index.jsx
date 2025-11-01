@@ -146,17 +146,49 @@ const SiteHeader = () => {
                     />
                   </ListItemButton>
                 </ListItem>
-                 {(index === 0 || index === 2 || index === 7) && (
-                  <Divider
-                    sx={{
-                      my: 1,
-                      backgroundColor: "rgba(255,255,255,0.3)",
-                    }}
-                  />
+
+              
+                {(index === 0 || index === 2 || index === 7) && (
+                  <>
+                    <Divider sx={{ my: 1, backgroundColor: "rgba(255,255,255,0.3)" }} />
+
+                  
+                    {index === 2 && (
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          textAlign: "center",
+                          mt: 2,
+                          mb: 4,
+                          fontWeight: "bold",
+                          letterSpacing: 1,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        MOVIES
+                      </Typography>
+                    )}
+                    {index === 7 && (
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          textAlign: "center",
+                          mt: 2,
+                          mb: 4,
+                          fontWeight: "bold",
+                          letterSpacing: 1,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        ACTORS
+                      </Typography>
+                    )}
+                  </>
                 )}
               </React.Fragment>
             ))}
           </List>
+
         </Box>
       </Drawer>
 
