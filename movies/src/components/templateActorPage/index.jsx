@@ -7,6 +7,7 @@ import { getActorImages } from "../../api/tmdb-api";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from '../spinner'
 import Paper from "@mui/material/Paper";
+import ActorHeader from "../headerActor";
 
 
 const TemplateActorPage = ({ actor, children }) => {
@@ -29,8 +30,8 @@ const TemplateActorPage = ({ actor, children }) => {
 
   return (
     <>
-      
 
+      <ActorHeader actor={actor} />
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid size={{ xs: 3 }}>
           <div sx={{
