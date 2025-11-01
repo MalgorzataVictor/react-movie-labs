@@ -10,8 +10,6 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import VideosCarousel from "../components/carousels/videosCarousel";
 import Masonry from "@mui/lab/Masonry";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { Link } from "react-router";
 import img from "../images/actor-image-placeholder.png";
 import Footer from "../components/footer";

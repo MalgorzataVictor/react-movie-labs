@@ -16,15 +16,22 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
 import { MoviesContext } from "../../contexts/moviesContext";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
 
 export default function MovieCard({ movie, action }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { watchlist, addToWatchlist } = useContext(MoviesContext);
   const navigate = useNavigate();
 
   movie.favorite = favorites.includes(movie.id);
+  movie.mustwatch = watchlist.includes(movie.id);
 
   const handleAddToFavorite = (e) => {
     addToFavorites(movie);
+  };
+
+  const handleAddToWatchlist = (e) => {
+    addToWatchlist(movie);
   };
 
   const newDate = (dateStr) => {
@@ -51,27 +58,38 @@ export default function MovieCard({ movie, action }) {
     >
       <CardHeader
         avatar={
-          movie.favorite && (
-            <IconButton onClick={handleAddToFavorite}>
-              <Avatar sx={{ backgroundColor: "#cc0000" }}>
-                <FavoriteIcon />
-              </Avatar>
-            </IconButton>
-          )
+          <>
+            {movie.favorite && (
+              <IconButton onClick={handleAddToFavorite}>
+                <Avatar sx={{ backgroundColor: "#cc0000" }}>
+                  <FavoriteIcon />
+                </Avatar>
+              </IconButton>
+            )}
+
+            {movie.mustwatch && (
+              <IconButton onClick={handleAddToWatchlist}>
+                <Avatar sx={{ backgroundColor: "#1976d2" }}>
+                  <PlaylistAddIcon />
+                </Avatar>
+              </IconButton>
+            )}
+          </>
+        
         }
 
-        title={
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", textAlign: "center", whiteSpace: "normal" }}
-          >
-            {movie.title}
-          </Typography>
-        }
-        sx={{
-          height: 64,
-          padding: 1,
-        }}
+      title={
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: "bold", textAlign: "center", whiteSpace: "normal" }}
+        >
+          {movie.title}
+        </Typography>
+      }
+      sx={{
+        height: 64,
+        padding: 1,
+      }}
       />
 
       <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>

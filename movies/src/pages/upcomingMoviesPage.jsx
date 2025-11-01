@@ -3,7 +3,7 @@ import { getUpcomingMovie } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
+import AddToWatchlistIcon from "../components/cardIcons/addToWatchlist";
 import { MoviesContext } from "../contexts/moviesContext";
 import { Box } from "@mui/material";
 import Pagination from "../components/pagination";
@@ -13,7 +13,7 @@ import { Helmet } from "react-helmet-async";
 const UpcomingMoviePage = (props) => {
   const [page, setPage] = useState(1);
 
-  const { mustWatch, addToMustWatch } = useContext(MoviesContext);
+
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['upcoming', page],
     queryFn: () => getUpcomingMovie(page),
@@ -30,6 +30,9 @@ const UpcomingMoviePage = (props) => {
 
   const movies = data.results;
 
+  const mustwatches = movies.filter((m) => m.mustwatch);
+  localStorage.setItem("mustwatches", JSON.stringify(mustwatches));
+
   return (
     <>
     <Helmet>
@@ -41,11 +44,8 @@ const UpcomingMoviePage = (props) => {
           movies={movies}
           action={(movie) => {
             return (
-              <PlaylistAddIcon
-                color="primary"
-                fontSize="large"
-                style={{ cursor: "pointer" }}
-                onClick={() => addToMustWatch(movie.id)}
+              <AddToWatchlistIcon
+                movie={movie}
               />
             );
           }}
