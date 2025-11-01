@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import img from '../../images/film-poster-placeholder.png';
+import img from '../../images/actor-image-placeholder.png';
 
 
 export default function ActorCard({ actor, action }) {
@@ -60,26 +60,6 @@ export default function ActorCard({ actor, action }) {
           }}
         />
       </Link>
-
-
-      {/* <CardActions sx={{ justifyContent: "space-between", paddingX: 2, paddingBottom: 2 }}>
-        {action(movie)}
-        <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            size="medium"
-            sx={{
-              backgroundColor: "#cc0000",
-              color: "#fff",
-              "&:hover": { backgroundColor: "#b30000" },
-              borderRadius: 2,
-              textTransform: "none",
-            }}
-          >
-            More Info
-          </Button>
-        </Link>
-      </CardActions> */}
     </Card>
   );
 }

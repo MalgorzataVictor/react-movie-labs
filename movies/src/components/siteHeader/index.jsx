@@ -146,7 +146,7 @@ const SiteHeader = () => {
                     />
                   </ListItemButton>
                 </ListItem>
-                 {(index === 0 || index === 2) && (
+                 {(index === 0 || index === 2 || index === 7) && (
                   <Divider
                     sx={{
                       my: 1,
