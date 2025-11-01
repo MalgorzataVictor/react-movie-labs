@@ -4,7 +4,7 @@ import { getMovies, getPopularActor } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 import MoviesCarousel from "../components/carousels/moviesCarousel";
-import Header from "../components/headerMovieList";
+import Header from "../components/headerHome";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -40,19 +40,13 @@ const HomePage = () => {
 
   return (
     <Box sx={{ width: "100%", backgroundColor: "#f0f0f0", minHeight: "100vh" }}>
-      <Header title="Home Page" movies={movies} />
+      <Header />
 
-      <Typography
-        variant="h4"
-        align="center"
-        sx={{ mt: 4, mb: 4, fontWeight: "bold", width: "100%" }}
-      >
-        Home Page
-      </Typography>
       <Paper
         elevation={3}
         sx={{
           ml: 4,
+          mt: 4,
           mr: 4,
           pb: 4,
           borderRadius: 3,
@@ -62,7 +56,7 @@ const HomePage = () => {
         <Typography
           variant="h5"
           align="center"
-          sx={{ pt: 2, fontWeight: "bold" }}
+          sx={{ pt: 2, pb:2, fontWeight: "bold" }}
         >
           Discover Movies
         </Typography>
@@ -74,101 +68,10 @@ const HomePage = () => {
       </Paper>
 
       <Paper
-  elevation={3}
-  sx={{
-    ml: 4,
-    mr: 4,
-    mt: 8,
-    pb: 4,
-    borderRadius: 3,
-    backgroundColor: "#f9f9f9",
-  }}
->
-  <Typography
-    variant="h5"
-    align="center"
-    sx={{ pt: 2, pb: 3, fontWeight: "bold" }}
-  >
-    Popular Actors
-  </Typography>
-
-  {actorsLoading && <Spinner />}
-  {actorsError && (
-    <Typography color="error" align="center">
-      {actorsErrorMsg.message}
-    </Typography>
-  )}
-
-  {actorsData && (
-    <Box sx={{ px: { xs: 2, sm: 4, md: 6 } }}>
-      <Masonry columns={{ xs: 3, sm: 4, md: 6 }} spacing={1}>
-        {actorsData.results.slice(0, 12).map((actor) => (
-          <Link
-            key={actor.id}
-            to={`/actors/${actor.id}`}
-            style={{
-              display: "block",
-              borderRadius: "10px",
-              overflow: "hidden",
-              position: "relative",
-            }}
-          >
-            <img
-              src={
-                actor.profile_path
-                  ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
-                  : img
-              }
-              alt={actor.name}
-              loading="lazy"
-              style={{
-                width: "100%",
-                height: "auto",
-                maxHeight: "256px", 
-                objectFit: "cover",
-                borderRadius: "10px",
-                transition: "transform 0.3s ease, filter 0.3s ease",
-                filter: "brightness(0.9)",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.filter = "brightness(1)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.filter = "brightness(0.9)";
-              }}
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                bottom: 0,
-                width: "100%",
-                background:
-                  "linear-gradient(to top, rgba(0,0,0,0.6) 20%, transparent)",
-                color: "white",
-                textAlign: "center",
-                py: 0.5,
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-              }}
-            >
-              {actor.name}
-            </Box>
-          </Link>
-        ))}
-      </Masonry>
-    </Box>
-  )}
-</Paper>
-
-
-
-      <Paper
         elevation={3}
         sx={{
           ml: 4,
-          mt: 8,
+          mt: 4,
           mr: 4,
           pb: 4,
           borderRadius: 3,
@@ -178,7 +81,98 @@ const HomePage = () => {
         <Typography
           variant="h5"
           align="center"
-          sx={{ pt: 2, pb: 2, fontWeight: "bold" }}
+          sx={{ pt: 2, pb:2, fontWeight: "bold" }}
+        >
+          Popular Actors
+        </Typography>
+
+        {actorsLoading && <Spinner />}
+        {actorsError && (
+          <Typography color="error" align="center">
+            {actorsErrorMsg.message}
+          </Typography>
+        )}
+
+        {actorsData && (
+          <Box sx={{ px: { xs: 2, sm: 4, md: 6 } }}>
+            <Masonry columns={{ xs: 3, sm: 4, md: 6 }} spacing={1}>
+              {actorsData.results.slice(0, 12).map((actor) => (
+                <Link
+                  key={actor.id}
+                  to={`/actors/${actor.id}`}
+                  style={{
+                    display: "block",
+                    borderRadius: "10px",
+                    overflow: "hidden",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={
+                      actor.profile_path
+                        ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
+                        : img
+                    }
+                    alt={actor.name}
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      maxHeight: "256px",
+                      objectFit: "cover",
+                      borderRadius: "10px",
+                      transition: "transform 0.3s ease, filter 0.3s ease",
+                      filter: "brightness(0.9)",
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = "scale(1.05)";
+                      e.currentTarget.style.filter = "brightness(1)";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                      e.currentTarget.style.filter = "brightness(0.9)";
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      bottom: 0,
+                      width: "100%",
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.6) 20%, transparent)",
+                      color: "white",
+                      textAlign: "center",
+                      py: 0.5,
+                      fontSize: "0.8rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {actor.name}
+                  </Box>
+                </Link>
+              ))}
+            </Masonry>
+          </Box>
+        )}
+      </Paper>
+
+
+
+      <Paper
+        elevation={3}
+        sx={{
+          ml: 4,
+          mt: 4,
+          mr: 4,
+          pb: 4,
+          borderRadius: 3,
+          backgroundColor: "#f9f9f9",
+        }}
+      >
+        <Typography
+          variant="h5"
+          align="center"
+          sx={{ pt: 2, pb:2, fontWeight: "bold" }}
         >
           Movie Trailers
         </Typography>
@@ -186,7 +180,7 @@ const HomePage = () => {
         <VideosCarousel movies={movies} />
       </Paper>
 
-        <Footer />
+      <Footer />
 
     </Box>
 
