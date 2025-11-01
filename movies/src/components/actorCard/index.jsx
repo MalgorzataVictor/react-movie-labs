@@ -1,23 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate, Link } from "react-router";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
-import StarRateIcon from "@mui/icons-material/StarRate";
-import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
+import StarRateIcon from "@mui/icons-material/StarRate";
 import img from '../../images/actor-image-placeholder.png';
 
-
-export default function ActorCard({ actor, action }) {
+export default function ActorCard({ actor }) {
   const navigate = useNavigate();
 
   return (
@@ -42,24 +33,31 @@ export default function ActorCard({ actor, action }) {
             {actor.name}
           </Typography>
         }
-        sx={{
-          height: 64,
-          padding: 1,
-        }}
+        sx={{ height: 64, padding: 1 }}
       />
-
       <Link to={`/actors/${actor.id}`} style={{ textDecoration: "none" }}>
         <CardMedia
           component="img"
           image={actor.profile_path ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}` : img}
           alt={actor.name}
-          sx={{
-            width: "100%",
-            aspectRatio: "1 / 1",
-            objectFit: "cover",
-          }}
+          sx={{ width: "100%", aspectRatio: "1 / 1", objectFit: "cover" }}
         />
       </Link>
+      
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 1,
+          gap: 0.5,
+        }}
+      >
+        <StarRateIcon color="warning" />
+        <Typography variant="body2" color="textSecondary">
+          {actor.popularity.toFixed(1)}
+        </Typography>
+      </Box>
     </Card>
   );
 }
